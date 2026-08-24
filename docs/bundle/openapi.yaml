@@ -3,10 +3,6 @@ info:
   title: Example API
   version: 1.0.0
   description: Example CRUD module — full CRUD with bulk operations and nested items
-servers:
-  - url: http://localhost:3000/api
-    description: Local development
-
 paths:
   /example:
     get:
@@ -61,7 +57,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiPaginatedResponse"
-
     post:
       summary: Create a new example
       tags:
@@ -90,11 +85,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
   /example/bulk:
     post:
       summary: Bulk create examples
-      description: Create multiple examples at once. Each item is processed individually — successful ones return in `data`, failures in `failed`.
+      description: Create multiple examples at once. Each item is processed
+        individually — successful ones return in `data`, failures in `failed`.
       tags:
         - Example
       requestBody:
@@ -123,7 +118,6 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/BulkCreateFailedItem"
-
   /example/with-items:
     post:
       summary: Create example with nested items
@@ -159,7 +153,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
   /example/{id}:
     get:
       summary: Get example by ID
@@ -191,7 +184,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
     put:
       summary: Full update an example
       tags:
@@ -234,7 +226,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
     patch:
       summary: Partial update an example
       tags:
@@ -283,7 +274,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
     delete:
       summary: Delete an example
       tags:
@@ -314,7 +304,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
 components:
   schemas:
     ApiResponse:
@@ -331,7 +320,6 @@ components:
       required:
         - success
         - message
-
     ApiPaginatedResponse:
       type: object
       properties:
@@ -350,7 +338,6 @@ components:
         - message
         - data
         - pagination
-
     PaginationMeta:
       type: object
       properties:
@@ -371,7 +358,6 @@ components:
         - limit
         - total
         - totalPages
-
     ErrorResponse:
       type: object
       properties:
@@ -391,7 +377,6 @@ components:
       required:
         - success
         - message
-
     Example:
       type: object
       properties:
@@ -423,7 +408,6 @@ components:
         - isActive
         - createdAt
         - updatedAt
-
     ExampleWithItems:
       allOf:
         - $ref: "#/components/schemas/Example"
@@ -436,7 +420,6 @@ components:
                 $ref: "#/components/schemas/ExampleItem"
           required:
             - items
-
     ExampleItem:
       type: object
       properties:
@@ -463,7 +446,6 @@ components:
         - quantity
         - price
         - exampleId
-
     CreateExampleRequest:
       type: object
       required:
@@ -480,7 +462,6 @@ components:
           type: boolean
           default: true
           description: Active status (defaults to true)
-
     UpdateExampleRequest:
       type: object
       required:
@@ -497,7 +478,6 @@ components:
         isActive:
           type: boolean
           description: Active status
-
     PartialUpdateExampleRequest:
       type: object
       minProperties: 1
@@ -512,7 +492,6 @@ components:
         isActive:
           type: boolean
           description: Active status
-
     BulkCreateRequest:
       type: object
       required:
@@ -539,7 +518,6 @@ components:
                 type: boolean
                 default: true
                 description: Active status
-
     BulkCreateFailedItem:
       type: object
       properties:
@@ -556,7 +534,6 @@ components:
         - index
         - name
         - reason
-
     ItemInput:
       type: object
       required:
@@ -576,7 +553,6 @@ components:
           type: integer
           exclusiveMinimum: 0
           description: Price in smallest currency unit (must be > 0)
-
     CreateWithItemsRequest:
       type: object
       required:
@@ -599,7 +575,6 @@ components:
           description: Array of items (1-20 items)
           items:
             $ref: "#/components/schemas/ItemInput"
-
     CreateWithItemsResponse:
       type: object
       properties:
@@ -631,3 +606,6 @@ components:
         - items
         - totalItems
         - totalValue
+servers:
+  - url: http://localhost:3000/api
+    description: Local development
